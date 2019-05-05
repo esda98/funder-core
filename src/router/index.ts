@@ -5,6 +5,7 @@ import ItemView from '../components/ItemView.vue';
 import { RouterOptions, RouteConfig } from 'vue-router';
 import SellView from "@/components/SellView.vue";
 import PayView from "@/components/PayView.vue";
+import PayDetailView from "@/components/PayDetailView.vue";
 
 Vue.use(Router);
 const navRoutes = <Array<RouteConfig>>[

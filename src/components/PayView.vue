@@ -75,16 +75,18 @@
         },
     })
     export default class PayView extends Vue {
-        public withdrawals: WithdrawalBalanace[] = [];
-        public paidWithdraws: WithdrawalBalanace[] = [];
-        public payWithdraw: WithdrawalBalanace = new WithdrawalBalanace();
-        public showPay: boolean = false;
+        withdrawals: WithdrawalBalanace[] = [];
+        paidWithdraws: WithdrawalBalanace[] = [];
+        payWithdraw: WithdrawalBalanace = new WithdrawalBalanace();
+        showPay: boolean = false;
 
         mounted() {
             this.refreshWithdrawals();
         }
 
         async refreshWithdrawals() {
+            this.withdrawals = [];
+            this.paidWithdraws = [];
             let apiRes = await FunderAPI.getWithdrawal();
             if (apiRes instanceof Array) {
                 let castedRes: WithdrawalBalanace[] = <WithdrawalBalanace[]>apiRes;
@@ -114,7 +116,6 @@
         doneChanges() {
             console.log('done changes');
             this.showPay = false;
-            this.payWithdraw = new WithdrawalBalanace();
             this.refreshWithdrawals();
         }
     }

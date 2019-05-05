@@ -35,6 +35,7 @@
             </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
+              <el-button type="danger" @click="btnDeleteClick()">Delete</el-button>
               <el-button @click="done">Cancel</el-button>
               <el-button type="primary" @click="btnDoneClick()">Confirm</el-button>
         </span>
@@ -45,6 +46,8 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import axios from 'axios';
     import {Item, ItemSubmit} from "@/Classes/Item";
+    import {FunderAPI} from "@/Classes/FunderAPI";
+    import {Result} from "@/Classes/Result";
 
     @Component
     export default class ItemDetailView extends Vue {
@@ -89,6 +92,9 @@
                 }
             });
         }
+        btnDeleteClick() {
+            this.submitDeleteItem();
+        }
         submitNewItem() {
             let url = 'https://funder-core-functions.azurewebsites.net/api/AddItem';
             let key = '?code=bXIhsIaFaxCb4z8MwR/pWJOw1E8NZc9Rj/nnOLJGgsvGDNHjbwB8NQ==';
@@ -116,7 +122,6 @@
                 }
             );
         }
-
         submitEditItem() {
             let url = 'https://funder-core-functions.azurewebsites.net/api/EditItem';
             let key = '?code=bXIhsIaFaxCb4z8MwR/pWJOw1E8NZc9Rj/nnOLJGgsvGDNHjbwB8NQ==';
@@ -140,6 +145,32 @@
                     this.done();
                 }
             );
+        }
+        async submitDeleteItem() {
+            let apiRes = await FunderAPI.deleteItem(this.itemToDisplay);
+            console.log(JSON.stringify(apiRes,null,2));
+            if (apiRes != null) {
+                if (apiRes.success) {
+                    this.$message({
+                        showClose: true,
+                        message: 'Successfully Deleted Item!',
+                        type: 'success'
+                    });
+                    this.done();
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: 'Unable to Delete Item',
+                        type: 'error'
+                    });
+                }
+            } else {
+                this.$message({
+                    showClose: true,
+                    message: 'Unable to Delete Item',
+                    type: 'error'
+                });
+            }
         }
 
         done() {

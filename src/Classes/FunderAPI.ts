@@ -16,7 +16,9 @@ export class FunderAPI {
     private static getSellersURL = "https://funder-core-functions.azurewebsites.net/api/GetSellersForAccount";
     private static addWithdrawalsURL = "https://funder-core-functions.azurewebsites.net/api/AddWithdrawals";
     private static getWithdrawalsURL = 'https://funder-core-functions.azurewebsites.net/api/GetWithdrawals';
-    public static addPaymentURL = ""
+    public static addPaymentURL = "https://funder-core-functions.azurewebsites.net/api/AddPayment" +
+        "";
+    public static deleteItemURL = "https://funder-core-functions.azurewebsites.net/api/DeleteItem";
 
     public static async getFundraisers() : Promise<(Fundraiser[]|null)> {
         let queryStr = '&accountId=' + this.acctId;
@@ -110,17 +112,28 @@ export class FunderAPI {
         return withArr
     }
 
-    public static async addPayment(pay: Payment) {
+    public static async addPayment(pay: Payment) : Promise<(Result|null)> {
         let result: Result;
         try {
-            let response = await axios.post(this.addWithdrawalsURL + this.key, JSON.stringify(ws));
+            let response = await axios.post(this.addPaymentURL + this.key, JSON.stringify(pay));
             console.log('add w data: ' + JSON.stringify(response.data));
-            resultArr = response.data;
+            result = response.data;
         } catch (error) {
             return null;
         }
-        return resultArr;
+        return result;
     }
 
+    public static async deleteItem(item: Item): Promise<(Result|null)> {
+        let result: Result;
+        try {
+            let response = await axios.post(this.deleteItemURL + this.key, JSON.stringify(item));
+            console.log('add w data: ' + JSON.stringify(response.data));
+            result = response.data;
+        } catch (error) {
+            return null;
+        }
+        return result;
+    }
 
 }
