@@ -1,0 +1,3 @@
+This repository contains all of the VueJS components and TypeScript scripts to runder the Funder website. This contains all UI elements in the .vue files as well as classes and framework classes utilized by the front end for accessing the API.
+
+This project can be locally run via NodeJS's NPM by cloning the repository, navigating to the cloned directory with a terminal window, performing an "npm install" on the directory to install the dependencies, then performing an "npm run serve" which will launch a locally hosted version of the Vue app via localhost which will be able to see Funder locally
